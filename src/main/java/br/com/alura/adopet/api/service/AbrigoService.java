@@ -1,6 +1,8 @@
 package br.com.alura.adopet.api.service;
 
-import br.com.alura.adopet.api.dto.*;
+import br.com.alura.adopet.api.dto.AbrigoDto;
+import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
+import br.com.alura.adopet.api.dto.PetDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
@@ -16,12 +18,9 @@ public class AbrigoService {
 
     @Autowired
     private AbrigoRepository abrigoRepository;
+
     @Autowired
     private PetRepository petRepository;
-
-    public void cadastrar(CadastrarAbrigoDto dto) {
-
-    }
 
     public List<AbrigoDto> listar() {
         return abrigoRepository
@@ -29,14 +28,13 @@ public class AbrigoService {
                 .stream()
                 .map(AbrigoDto::new)
                 .toList();
-
     }
 
-    public void cadastrarPet(CadastrarAbrigoDto dto) {
-        boolean jaCadastrado = abrigoRepository
-                .existsByNomeOrTelefoneOrEmail(dto.nome(), dto.telefone(), dto.email());
+    public void cadatrar(CadastroAbrigoDto dto) {
+        boolean jaCadastrado = abrigoRepository.existsByNomeOrTelefoneOrEmail(dto.nome(), dto.telefone(), dto.email());
+
         if (jaCadastrado) {
-            throw new ValidacaoException("Dados já cadastrados para outro abrigo");
+            throw new ValidacaoException("Dados já cadastrados para outro abrigo!");
         }
 
         abrigoRepository.save(new Abrigo(dto));
@@ -53,14 +51,15 @@ public class AbrigoService {
     }
 
     public Abrigo carregarAbrigo(String idOuNome) {
-        Optional<Abrigo> optionalAbrigo;
+        Optional<Abrigo> optional;
         try {
             Long id = Long.parseLong(idOuNome);
-            optionalAbrigo = abrigoRepository.findById(idOuNome);
-        }catch (NumberFormatException e) {
-            optionalAbrigo = Optional.ofNullable(abrigoRepository.findByNome(idOuNome));
+            optional = abrigoRepository.findById(id);
+        } catch (NumberFormatException exception) {
+            optional = abrigoRepository.findByNome(idOuNome);
         }
-        return optionalAbrigo.orElseThrow(() -> new ValidacaoException("Abrigo não encontrado"));
+
+        return optional.orElseThrow(() -> new ValidacaoException("Abrigo não encontrado"));
     }
 
 }

@@ -1,8 +1,7 @@
 package br.com.alura.adopet.api.model;
 
-import br.com.alura.adopet.api.dto.CadastrarAbrigoDto;
+import br.com.alura.adopet.api.dto.CadastroPetDto;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 
 import java.util.Objects;
 
@@ -35,8 +34,10 @@ public class Pet {
     @OneToOne(mappedBy = "pet", fetch = FetchType.LAZY)
     private Adocao adocao;
 
-    public Pet(@Valid CadastrarAbrigoDto dto, Abrigo abrigo) {
-        this.tipo = dto.tipoPet();
+    public Pet(){}
+
+    public Pet(CadastroPetDto dto, Abrigo abrigo) {
+        this.tipo = dto.tipo();
         this.nome = dto.nome();
         this.raca = dto.raca();
         this.idade = dto.idade();
@@ -71,71 +72,36 @@ public class Pet {
         return tipo;
     }
 
-    public void setTipo(TipoPet tipo) {
-        this.tipo = tipo;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getRaca() {
         return raca;
     }
 
-    public void setRaca(String raca) {
-        this.raca = raca;
-    }
-
     public Integer getIdade() {
         return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
     }
 
     public String getCor() {
         return cor;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
     public Float getPeso() {
         return peso;
-    }
-
-    public void setPeso(Float peso) {
-        this.peso = peso;
     }
 
     public Boolean getAdotado() {
         return adotado;
     }
 
-    public void setAdotado(Boolean adotado) {
-        this.adotado = adotado;
-    }
-
     public Abrigo getAbrigo() {
         return abrigo;
-    }
-
-    public void setAbrigo(Abrigo abrigo) {
-        this.abrigo = abrigo;
     }
 
     public Adocao getAdocao() {
         return adocao;
     }
 
-    public void setAdocao(Adocao adocao) {
-        this.adocao = adocao;
-    }
 }

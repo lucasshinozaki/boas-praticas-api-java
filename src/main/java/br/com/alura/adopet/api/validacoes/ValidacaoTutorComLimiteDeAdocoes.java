@@ -13,12 +13,14 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ValidacaoTutorComLimiteDeAdocao implements ValidacaoSolicitacaoAdocao{
+public class ValidacaoTutorComLimiteDeAdocoes implements ValidacaoSolicitacaoAdocao {
 
     @Autowired
     private AdocaoRepository adocaoRepository;
+
     @Autowired
     private TutorRepository tutorRepository;
+
     public void validar(SolicitacaoAdocaoDto dto) {
         List<Adocao> adocoes = adocaoRepository.findAll();
         Tutor tutor = tutorRepository.getReferenceById(dto.idTutor());
@@ -28,8 +30,9 @@ public class ValidacaoTutorComLimiteDeAdocao implements ValidacaoSolicitacaoAdoc
                 contador = contador + 1;
             }
             if (contador == 5) {
-                throw new ValidacaoException("Tutor chegou no limite máximo de 5 adoções!");
+                throw new ValidacaoException("Tutor chegou ao limite máximo de 5 adoções!");
             }
         }
     }
+
 }
