@@ -1,4 +1,7 @@
 package br.com.alura.adopet.api.dto;
 
-public record CadastrarAbrigoDto(String nome, String telefone, String email) {
+import br.com.alura.adopet.api.model.TipoPet;
+
+public record CadastrarAbrigoDto(String nome,TipoPet tipoPet, String raca, Integer idade, String cor, Float peso, String telefone, String email) {
+
 }

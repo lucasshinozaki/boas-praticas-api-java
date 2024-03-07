@@ -36,7 +36,7 @@ public class Pet {
     private Adocao adocao;
 
     public Pet(@Valid CadastrarAbrigoDto dto, Abrigo abrigo) {
-        this.tipo = dto.tipo();
+        this.tipo = dto.tipoPet();
         this.nome = dto.nome();
         this.raca = dto.raca();
         this.idade = dto.idade();
